@@ -25,6 +25,7 @@ def ask(question: str) -> str:
     client = genai.Client(api_key=get_api_key())
     response = client.models.generate_content(model=MODEL, contents=question)
 
+    print(response.text)
     usage = response.usage_metadata
     if usage is not None:
         print(
@@ -43,7 +44,7 @@ def main() -> None:
     print(f"[model] {MODEL}")
     print(f"[質問] {args.question}\n")
     try:
-        print(ask(args.question))
+        ask(args.question)
     except errors.APIError as e:
         print(api_error_message(e.code, e.message))
         raise SystemExit(1)
